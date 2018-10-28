@@ -42,33 +42,68 @@ public class UserViewBlueprint extends AppCompatActivity {
         call.enqueue(new Callback<List<SafeExits>>() {
             @Override
             public void onResponse(Call<List<SafeExits>> call, Response<List<SafeExits>> response) {
-                List<SafeExits> ls = response.body();
+                List<SafeExits> sl = response.body();
 
-                for (SafeExits value : ls)
+                for (SafeExits value : sl)
                 {
                     if(value.getExitID() == 1)
                     {
-                        MFCExit2.setChecked(true);
+                        if(value.getiStatus() == 1)
+                        {
+                            MFCExit2.setChecked(true);
+                        }
+                        else
+                        {
+                            MFCExit2.setChecked(false);
+                        }
                     }
 
                     else if(value.getExitID() == 2)
                     {
-                        backgateExit2.setChecked(true);
+                        if(value.getiStatus() == 1)
+                        {
+                            backgateExit2.setChecked(true);
+                        }
+                        else
+                        {
+                            backgateExit2.setChecked(false);
+                        }
                     }
 
                     else if(value.getExitID() == 3)
                     {
-                        mainExit2.setChecked(true);
+                        if(value.getiStatus() == 1)
+                        {
+                            mainExit2.setChecked(true);
+                        }
+                        else
+                        {
+                            mainExit2.setChecked(false);
+                        }
                     }
 
                     else if(value.getExitID() == 4)
                     {
-                        mainGateExit2.setChecked(true);
+                        if(value.getiStatus() == 1)
+                        {
+                            mainGateExit2.setChecked(true);
+                        }
+                        else
+                        {
+                            mainGateExit2.setChecked(false);
+                        }
                     }
 
                     else if(value.getExitID() == 5)
                     {
-                        LRTExit2.setChecked(true);
+                        if(value.getiStatus() == 1)
+                        {
+                            LRTExit2.setChecked(true);
+                        }
+                        else
+                        {
+                            LRTExit2.setChecked(false);
+                        }
                     }
 
                     Log.d("responsebody ",String.valueOf(value.getiStatus()));
