@@ -54,7 +54,6 @@ public class AdminBlueprint extends AppCompatActivity {
                 AdminBlueprint.this.startActivity(i);
                 //JUST TO CHECK KUNG NAPAPASA
                 //PUSH NOTIF HERE
-
             }
 
         });
