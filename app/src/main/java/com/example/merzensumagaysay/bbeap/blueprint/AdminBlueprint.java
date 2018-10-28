@@ -52,6 +52,9 @@ public class AdminBlueprint extends AppCompatActivity {
 
                 Intent i = new Intent(AdminBlueprint.this, UserViewBlueprint.class);
                 AdminBlueprint.this.startActivity(i);
+                //JUST TO CHECK KUNG NAPAPASA
+                //PUSH NOTIF HERE
+
             }
 
         });
