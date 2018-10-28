@@ -4,9 +4,12 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.merzensumagaysay.bbeap.R;
 
@@ -16,8 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminBlueprint extends AppCompatActivity
-{
+public class AdminBlueprint extends AppCompatActivity {
 
     SafeService safeService;
 
@@ -45,83 +47,187 @@ public class AdminBlueprint extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                if (!MFCExit.isChecked() && !backgateExit.isChecked() && !mainExit.isChecked() && !mainGateExit.isChecked() && !LRTExit.isChecked()) {
-                    check = "noCheck";
-                }
 
-                if (MFCExit.isChecked()) {
-                    check = "MFCExit";
-                }
+            }
 
-                if (backgateExit.isChecked()) {
-                    check = "backgateExit";
+        });
 
-                }
+        getExits();
 
-                if (mainExit.isChecked()) {
-                    check = "mainExit";
+    }
 
-                }
+    public void getExits(){
+        safeService = APIUtils.getSafeService();
 
-                if (mainGateExit.isChecked()) {
-                    check = "mainGateExit";
+        Call<List<SafeExits>> call = safeService.getExit();
+        call.enqueue(new Callback<List<SafeExits>>() {
+            @Override
+            public void onResponse(Call<List<SafeExits>> call, Response<List<SafeExits>> response) {
+                List<SafeExits> ls = response.body();
 
-                }
-
-                if (LRTExit.isChecked()) {
-                    check = "LRTExit";
-
-                }
-
-
-                switch (check) {
-                    case "noCheck":
-                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminBlueprint.this);
-                        mBuilder.setTitle("NO EXITS SELECTED");
-                        mBuilder.setMessage("Please choose safe exits");
-                        mBuilder.setCancelable(false);
-                        mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                dialogInterface.dismiss();
+                for (final SafeExits value : ls) {
+                    CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            if (value.getiStatus() == 1){
+                                setExits(value.getExitID(), 0);
                             }
-                        });
-                        mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                dialogInterface.dismiss();
+                            else{
+                                setExits(value.getExitID(), 1);
                             }
-                        });
+                        }
+                    };
 
-                        AlertDialog alertDialog = mBuilder.create();
-                        alertDialog.show();
-                        break;
+                    if (value.getExitID() == 1) {
+                        MFCExit.setChecked(true);
+                        MFCExit.setOnCheckedChangeListener(checkListener);
+                    } else if (value.getExitID() == 2) {
+                        backgateExit.setChecked(true);
+                        backgateExit.setOnCheckedChangeListener(checkListener);
+                    } else if (value.getExitID() == 3) {
+                        mainExit.setChecked(true);
+                        mainExit.setOnCheckedChangeListener(checkListener);
+                    } else if (value.getExitID() == 4) {
+                        mainGateExit.setChecked(true);
+                        mainGateExit.setOnCheckedChangeListener(checkListener);
+                    } else if (value.getExitID() == 5) {
+                        LRTExit.setChecked(true);
+                        LRTExit.setOnCheckedChangeListener(checkListener);
+                    }
 
-                    case "MFCExit":
-
-                        break;
-
-                    case "backgateExit":
-
-                        break;
-
-                    case "mainExit":
-
-                        break;
-
-                    case "mainGateExit":
-
-                        break;
-
-                    case "LRTExit":
-
-                        break;
+                    Log.d("responsebody ", String.valueOf(value.getiStatus()));
                 }
+            }
 
+            @Override
+            public void onFailure(Call<List<SafeExits>> call, Throwable t) {
+                Log.d("responsebody", "onFailure: " + t.getMessage());
             }
         });
     }
 
+    public void setExits(int exitID, int iStatus){
+        safeService = APIUtils.getSafeService();
+
+        Call<SafeExits> call = safeService.updateExit(exitID, iStatus);
+        call.enqueue(new Callback<SafeExits>() {
+            @Override
+            public void onResponse(Call<SafeExits> call, Response<SafeExits> response)
+            {
+                if(response.isSuccessful())
+                {
+                 Toast.makeText(AdminBlueprint.this, "Successful", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                 Toast.makeText(AdminBlueprint.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
+                }
+            }
+                
+            @Override
+            public void onFailure(Call<SafeExits> call, Throwable t)
+            {
+                Toast.makeText(AdminBlueprint.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
+
+    private void sendExit()
+    {
+
+        safeService = APIUtils.getSafeService();
+
+
+        if (!MFCExit.isChecked() && !backgateExit.isChecked() && !mainExit.isChecked() && !mainGateExit.isChecked() && !LRTExit.isChecked())
+        {
+            check = "noCheck";
+        }
+
+        if (MFCExit.isChecked())
+        {
+            check = "MFCExit";
+        }
+
+        if (backgateExit.isChecked())
+        {
+            check = "backgateExit";
+
+        }
+
+        if (mainExit.isChecked())
+        {
+            check = "mainExit";
+
+        }
+
+        if (mainGateExit.isChecked())
+        {
+            check = "mainGateExit";
+
+        }
+
+        if (LRTExit.isChecked())
+        {
+            check = "LRTExit";
+
+        }
+
+
+        switch (check)
+        {
+            case "noCheck":
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminBlueprint.this);
+                mBuilder.setTitle("NO EXITS SELECTED");
+                mBuilder.setMessage("Please choose safe exits");
+                mBuilder.setCancelable(false);
+                mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog alertDialog = mBuilder.create();
+                alertDialog.show();
+                break;
+
+            case "MFCExit":
+
+                break;
+
+            case "backgateExit":
+
+                break;
+
+            case "mainExit":
+
+                break;
+
+            case "mainGateExit":
+
+                break;
+
+            case "LRTExit":
+
+                break;
+        }
+
+    }
+
+
 }
+

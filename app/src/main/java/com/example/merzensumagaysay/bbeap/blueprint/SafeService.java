@@ -23,10 +23,10 @@ public interface SafeService {
     Call<List<SafeExits>> getExit();
 
   //  @FormUrlEncoded //admin
-    @Headers("content-type:application/json")
-    @POST("up.php/{exitID}")
-    Call<JSONResponse> updateExit(@Field("iStatus") int iStatus,
-                           @Path("exitID") int exitID);
+    @POST("upd.php")
+    Call<SafeExits> updateExit(@Field("exitID") int exitID,
+                               @Field("iStatus") int iStatus);
+
 
 
 }
