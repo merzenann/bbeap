@@ -104,8 +104,8 @@
 
     <Button
         android:id="@+id/btnSendToUsers"
-        android:layout_width="190dp"
-        android:layout_height="46dp"
+        android:layout_width="152dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -226,6 +226,24 @@
         app:layout_constraintStart_toStartOf="@+id/blueprint"
         app:layout_constraintTop_toTopOf="@+id/blueprint"
         app:layout_constraintVertical_bias="0.883" />
+
+    <EditText
+        android:id="@+id/instruc1"
+        android:layout_width="237dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Instruction 1"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blueprint"
+        app:layout_constraintVertical_bias="0.026" />
 
 
 </android.support.constraint.ConstraintLayout>

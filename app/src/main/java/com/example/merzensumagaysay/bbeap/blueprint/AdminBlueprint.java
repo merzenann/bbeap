@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.merzensumagaysay.bbeap.R;
@@ -26,7 +27,6 @@ public class AdminBlueprint extends AppCompatActivity {
     private static final String TAG = "AdminBlueprint";
     SafeService safeService;
 
-    String check;
     CheckBox MFCExit, backgateExit, mainExit, mainGateExit, LRTExit;
     Button btnSendToUsers;
 
@@ -48,8 +48,8 @@ public class AdminBlueprint extends AppCompatActivity {
         btnSendToUsers = (Button) findViewById(R.id.btnSendToUsers);
         btnSendToUsers.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view)
+            {
                 Intent i = new Intent(AdminBlueprint.this, UserViewBlueprint.class);
                 AdminBlueprint.this.startActivity(i);
                 //JUST TO CHECK KUNG NAPAPASA
@@ -72,7 +72,8 @@ public class AdminBlueprint extends AppCompatActivity {
                 final List<SafeExits> sl = response.body();
 
                 for (final SafeExits value : sl) {
-                    CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
+                    CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener()
+                    {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                             Log.d(TAG, "onCheckedChanged: " + compoundButton.isChecked());
@@ -119,6 +120,7 @@ public class AdminBlueprint extends AppCompatActivity {
 
                     Log.d("responsebody ", String.valueOf(value.getiStatus()));
                 }
+
             }
 
             @Override
