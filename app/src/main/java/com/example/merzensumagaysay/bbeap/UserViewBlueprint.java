@@ -1,12 +1,10 @@
-package com.example.merzensumagaysay.bbeap.blueprint;
+package com.example.merzensumagaysay.bbeap;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import com.example.merzensumagaysay.bbeap.R;
 
 import java.util.List;
 
@@ -32,11 +30,13 @@ public class UserViewBlueprint extends AppCompatActivity {
         mainExit2 = (CheckBox)findViewById(R.id.mainExit2);
         mainGateExit2 = (CheckBox)findViewById(R.id.mainGateExit2);
         LRTExit2 = (CheckBox)findViewById(R.id.LRTExit2);
+
         ins1 = (TextView)findViewById(R.id.ins1);
 
         viewSafeExit();
 
     }
+
 
     private void viewSafeExit(){
 
@@ -113,14 +113,12 @@ public class UserViewBlueprint extends AppCompatActivity {
                     }
 
                     Log.d("responsebody ",String.valueOf(value.getiStatus()));
-
                 }
             }
 
             @Override
             public void onFailure(Call<List<SafeExits>> call, Throwable t) {
                 Log.d("responsebody", "onFailure: " + t.getMessage());
-                Log.d("bod", "onFailure: " + t.getMessage());
 
             }
         });

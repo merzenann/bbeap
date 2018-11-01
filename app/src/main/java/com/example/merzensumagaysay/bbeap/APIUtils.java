@@ -1,6 +1,4 @@
-package com.example.merzensumagaysay.bbeap.blueprint;
-
-import retrofit2.http.Headers;
+package com.example.merzensumagaysay.bbeap;
 
 /**
  * Created by merzensumagaysay on 24/10/2018.
@@ -13,7 +11,7 @@ public class APIUtils {
     };
 
 
-    public static final String API_URL = "http://10.90.167.224:8080/admin/";
+    public static final String API_URL = "http://192.168.1.8:8080/admin/";
 
     public static SafeService getSafeService(){
         return RetrofitClient.getClient(API_URL).create(SafeService.class);

@@ -1,4 +1,4 @@
-package com.example.merzensumagaysay.bbeap.blueprint;
+package com.example.merzensumagaysay.bbeap;
 
 /**
  * Created by merzensumagaysay on 24/10/2018.
@@ -19,7 +19,16 @@ public class SafeExits {
 
     @SerializedName("iStatus")
     @Expose
-    private int iStatus;        //boolean?
+    private int iStatus;      //boolean?
+
+
+    @SerializedName("userID")
+    @Expose
+    private int userID;
+
+    @SerializedName("instruction")
+    @Expose
+    private String instruction;
 
 
     @SerializedName("value")
@@ -31,11 +40,14 @@ public class SafeExits {
 
     }
 
-    public SafeExits(int exitID, String exitName, int iStatus)
+    public SafeExits(int exitID, String exitName, int iStatus, int userID, String instruction)
     {
         this.exitID = exitID;
         this.exitName = exitName;
         this.iStatus = iStatus;
+        this.userID = userID;
+        this.instruction = instruction;
+
     }
 
 
@@ -47,6 +59,7 @@ public class SafeExits {
         this.exitID = exitID;
     }
 
+
     public String getExitName() {
         return exitName;
     }
@@ -54,6 +67,7 @@ public class SafeExits {
     public void setExitName(String exitName) {
         this.exitName = exitName;
     }
+
 
     public int getiStatus() {
         return iStatus;
@@ -71,5 +85,24 @@ public class SafeExits {
     public void setValue(int value) {
         this.value = value;
     }
+
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+
 
 }
