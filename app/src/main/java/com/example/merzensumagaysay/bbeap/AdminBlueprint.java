@@ -43,7 +43,7 @@ public class AdminBlueprint extends AppCompatActivity {
         setTitle("Safe Exits - Blueprint");
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AdminBlueprint.this);
-        userID = prefs.getInt("userID", 0);
+        userID = prefs.getInt("userID", 1);
 
 
         MFCExit = (CheckBox) findViewById(R.id.MFCExit);
@@ -65,10 +65,35 @@ public class AdminBlueprint extends AppCompatActivity {
                 //JUST TO CHECK KUNG NAPAPASA - INTENT
                 //PUSH NOTIF HERE
 
+
             }
         });
 
         getExits();
+
+    }
+
+
+
+
+    public void setInstruction(int exitID, String instruction) throws IOException {
+
+        Call<String> call = safeService.sendMessage(exitID, instruction);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                Toast.makeText(AdminBlueprint.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+                Toast.makeText(AdminBlueprint.this, "Error" + t.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
     }
 
@@ -184,101 +209,3 @@ public class AdminBlueprint extends AppCompatActivity {
     }
 
 }
-
-
-//    private void sendExit()
-//    {
-//
-//        safeService = APIUtils.getSafeService();
-//
-//
-//        if (!MFCExit.isChecked() && !backgateExit.isChecked() && !mainExit.isChecked() && !mainGateExit.isChecked() && !LRTExit.isChecked())
-//        {
-//            check = "noCheck";
-//        }
-//
-//        if (MFCExit.isChecked())
-//        {
-//            check = "MFCExit";
-//        }
-//
-//        if (backgateExit.isChecked())
-//        {
-//            check = "backgateExit";
-//
-//        }
-//
-//        if (mainExit.isChecked())
-//        {
-//            check = "mainExit";
-//
-//        }
-//
-//        if (mainGateExit.isChecked())
-//        {
-//            check = "mainGateExit";
-//
-//        }
-//
-//        if (LRTExit.isChecked())
-//        {
-//            check = "LRTExit";
-//
-//        }
-//
-//
-//        switch (check)
-//        {
-//            case "noCheck":
-//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminBlueprint.this);
-//                mBuilder.setTitle("NO EXITS SELECTED");
-//                mBuilder.setMessage("Please choose safe exits");
-//                mBuilder.setCancelable(false);
-//                mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i)
-//                    {
-//
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//
-//                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i)
-//                    {
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//
-//                AlertDialog alertDialog = mBuilder.create();
-//                alertDialog.show();
-//                break;
-//
-//            case "MFCExit":
-//
-//                break;
-//
-//            case "backgateExit":
-//
-//                break;
-//
-//            case "mainExit":
-//
-//                break;
-//
-//            case "mainGateExit":
-//
-//                break;
-//
-//            case "LRTExit":
-//
-//                break;
-//        }
-//
-//    }
-
-
-

@@ -28,13 +28,15 @@ public interface SafeService {
     Call<ResponseBody> updateExit(@Field("exitID") int exitID,
                                   @Field("iStatus") int iStatus);
 
+
     @Headers("content-type:application/json")
     @GET("get.php/") //message
     Call<List<SafeExits>> getMessage();
 
     @FormUrlEncoded
     @POST("ins.php/") //message
-    Call<String> sendMessage(@Field("instruction") String instruction);
+    Call<String> sendMessage(@Field("exitID") int exitID,
+                             @Field("instruction") String instruction);
 
 
 

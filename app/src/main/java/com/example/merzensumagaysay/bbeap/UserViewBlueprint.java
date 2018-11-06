@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -32,9 +33,34 @@ public class UserViewBlueprint extends AppCompatActivity {
         LRTExit2 = (CheckBox)findViewById(R.id.LRTExit2);
 
         ins1 = (TextView)findViewById(R.id.ins1);
+        fetchData();
+
 
         viewSafeExit();
 
+    }
+
+    private void fetchData() {
+        safeService = APIUtils.getSafeService();
+
+        Call<List<SafeExits>> call = safeService.getMessage();
+        call.enqueue(new Callback<List<SafeExits>>() {
+            @Override
+            public void onResponse(Call<List<SafeExits>> call, Response<List<SafeExits>> response) {
+                List<SafeExits> adslist = response.body();
+
+                String instruction = adslist.get(0).getInstruction();
+                ins1.setText(instruction);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<SafeExits>> call, Throwable t) {
+
+                Toast.makeText(UserViewBlueprint.this, ""+t.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 
