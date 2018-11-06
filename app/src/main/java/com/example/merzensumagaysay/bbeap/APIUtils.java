@@ -11,7 +11,7 @@ public class APIUtils {
     };
 
 
-    public static final String API_URL = "http://10.90.205.174:8080/admin/";
+    public static final String API_URL = "http://192.168.1.10:8080/admin/";
 
     public static SafeService getSafeService(){
         return RetrofitClient.getClient(API_URL).create(SafeService.class);

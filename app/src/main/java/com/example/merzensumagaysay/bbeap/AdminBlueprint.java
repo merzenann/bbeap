@@ -64,16 +64,22 @@ public class AdminBlueprint extends AppCompatActivity {
                 AdminBlueprint.this.startActivity(i);
                 //JUST TO CHECK KUNG NAPAPASA - INTENT
                 //PUSH NOTIF HERE
+                String ins = instruction.getText().toString();
+                try {
+                    setInstruction(1, ins);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
             }
         });
 
+        instruct();
+
         getExits();
 
     }
-
-
 
 
     public void setInstruction(int exitID, String instruction) throws IOException {
@@ -95,6 +101,31 @@ public class AdminBlueprint extends AppCompatActivity {
             }
         });
 
+    }
+//
+    public void instruct(){
+        safeService = APIUtils.getSafeService();
+
+        Call<List<SafeExits>> call = safeService.getMessage();
+        call.enqueue(new Callback<List<SafeExits>>() {
+            @Override
+            public void onResponse(Call<List<SafeExits>> call, Response<List<SafeExits>> response) {
+                final List<SafeExits> ins = response.body();
+                for (final  SafeExits value : ins)
+                {
+                    if(value.getExitID() == 1)
+                    {
+                        instruction.setText(value.getInstruction());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SafeExits>> call, Throwable t) {
+
+            }
+        });
     }
 
 
